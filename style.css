@@ -1,0 +1,43 @@
+/* RESET */
+*, *::before, *::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html, body {
+	min-height: 100%;
+}
+
+body {
+	line-height: 1.5;
+}
+
+image, svg, video, picture {
+	max-width: 100%;
+}
+
+button, input, textarea, select {
+	font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+	overflow-wrap: break-word;
+}
+
+/* Screen */
+#screen {
+	width: 100vw;
+	height: 100vh;
+
+	display: flex;
+	align-items: end;
+	gap: .2rem;
+
+	background-color: #000;
+}
+
+.element {
+	flex-grow: 1;
+	background-color: blue;
+}
