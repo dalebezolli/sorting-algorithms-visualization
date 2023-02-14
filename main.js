@@ -7,7 +7,8 @@ class Screen {
 		this.elementsArray = [];
 		this.iterationDelay = 300;
 		this.colors = {
-			currentColor: '#ff0bbb',
+			current: '#ff0bbb',
+			sorted: '#00ff00',
 		};
 		
 		for(let size of initialArray) {
@@ -20,8 +21,8 @@ class Screen {
 		}
 	}
 
-	async display(array, currentIndex) {
-		this.elementsArray[currentIndex].style.backgroundColor = this.colors.currentColor;
+	async display(array, currentIndex, sortedIndex) {
+		this.elementsArray[currentIndex].style.backgroundColor = this.colors.current;
 
 		await new Promise((resolve) => {
 			setTimeout(() => {
@@ -29,11 +30,15 @@ class Screen {
 			}, this.iterationDelay);
 		});
 
+
 		for(let i = 0; i < this.elementsArray.length; i++) {
 			this.elementsArray[i].style.height = `${array[i]}%`;
 		}
 
 		this.elementsArray[currentIndex].style.backgroundColor = '';
+		for(let i = 0; i <= sortedIndex; i++) {
+			this.elementsArray[i].style.backgroundColor = '#00ff00';
+		}
 	}
 
 	setColors(colors) {
@@ -41,8 +46,8 @@ class Screen {
 			throw Error('colors must be an object');
 		}
 
-		if('currentColor' in colors) {
-			this.colors.currentColor = colors.currentColor;
+		if('current' in colors) {
+			this.colors.current = colors.current;
 		}
 	}
 
@@ -59,7 +64,7 @@ class Screen {
 async function sort() {
 	const array = [1, 90, 10, 30, 20, 60, 50, 100, 70, 80];
 	const scr = new Screen('screen', array);
-	scr.setColors({currentColor: '#00ffff'});
+	scr.setColors({current: '#00ffff'});
 
 	for(let i = 0; i < array.length - 1; i++) {
 		for(let j = i + 1; j > 0; j--) {
@@ -67,7 +72,7 @@ async function sort() {
 				const temp = array[j - 1];
 				array[j - 1] = array[j];
 				array[j] = temp;
-				await scr.display(array, j);
+				await scr.display(array, j, i);
 			}
 		}
 	}
