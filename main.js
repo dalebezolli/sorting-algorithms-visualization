@@ -59,7 +59,7 @@ class Screen {
 
 
 async function sort() {
-	const ARRAY_SIZE  = 100;
+	const ARRAY_SIZE  = 10;
 	const array = new Array(ARRAY_SIZE);
 	for(let i = 0; i < ARRAY_SIZE; i++) {
 		array[i] = Math.ceil(Math.random() * 100);
@@ -72,13 +72,15 @@ async function sort() {
 		let key = array[i];
 
 		let j = i - 1;
-		while(j > 0 && key < array[j]) {
+		while(j >= 0 && key < array[j]) {
+			console.log(`STEP ${i}:${j} checking ${key} < ${array[j]} = ${key < array[j]}`);
 			array[j + 1] = array[j];
-			j--;
 			await scr.display(array, j);
+			j--;
 		}
 		array[j + 1] = key;
-		await scr.display(array, j);
+		await scr.display(array, j + 1);
+		console.log(array);
 	}
 
 }
