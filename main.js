@@ -21,7 +21,7 @@ class Screen {
 		}
 	}
 
-	async display(array, currentIndex, sortedIndex) {
+	async display(array, currentIndex) {
 		this.elementsArray[currentIndex].style.backgroundColor = this.colors.current;
 
 		await new Promise((resolve) => {
@@ -36,9 +36,6 @@ class Screen {
 		}
 
 		this.elementsArray[currentIndex].style.backgroundColor = '';
-		for(let i = 0; i <= sortedIndex; i++) {
-			this.elementsArray[i].style.backgroundColor = '#00ff00';
-		}
 	}
 
 	setColors(colors) {
@@ -66,16 +63,19 @@ async function sort() {
 	const scr = new Screen('screen', array);
 	scr.setColors({current: '#00ffff'});
 
-	for(let i = 0; i < array.length - 1; i++) {
-		for(let j = i + 1; j > 0; j--) {
-			if(array[j - 1] > array[j]) {
-				const temp = array[j - 1];
-				array[j - 1] = array[j];
-				array[j] = temp;
-				await scr.display(array, j, i);
-			}
+	for(let i = 1; i < array.length; i++) {
+		let key = array[i];
+
+		let j = i - 1;
+		while(j > 0 && key < array[j]) {
+			array[j + 1] = array[j];
+			j--;
+			await scr.display(array, j);
 		}
+		array[j + 1] = key;
+		await scr.display(array, j);
 	}
+
 }
 
 sort();
