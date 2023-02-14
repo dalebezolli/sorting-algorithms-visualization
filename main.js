@@ -59,7 +59,12 @@ class Screen {
 
 
 async function sort() {
-	const array = [1, 90, 10, 30, 20, 60, 50, 100, 70, 80];
+	const ARRAY_SIZE  = 100;
+	const array = new Array(ARRAY_SIZE);
+	for(let i = 0; i < ARRAY_SIZE; i++) {
+		array[i] = Math.ceil(Math.random() * 100);
+	}
+
 	const scr = new Screen('screen', array);
 	scr.setColors({current: '#00ffff'});
 
