@@ -1,15 +1,14 @@
 'use strict';
 
 class Screen {
-	screen;
-	elementsArray;
-	colors = {
-		currentColor: '#ff0bbb',
-	};
 
 	constructor(id, initialArray) {
 		this.screen = document.getElementById(id);
 		this.elementsArray = [];
+		this.iterationDelay = 300;
+		this.colors = {
+			currentColor: '#ff0bbb',
+		};
 		
 		for(let size of initialArray) {
 			let element = document.createElement('div');
@@ -21,13 +20,13 @@ class Screen {
 		}
 	}
 
-	async display(array, delay, currentIndex) {
+	async display(array, currentIndex) {
 		this.elementsArray[currentIndex].style.backgroundColor = this.colors.currentColor;
 
 		await new Promise((resolve) => {
 			setTimeout(() => {
 				resolve()
-			}, delay);
+			}, this.iterationDelay);
 		});
 
 		for(let i = 0; i < this.elementsArray.length; i++) {
@@ -46,6 +45,14 @@ class Screen {
 			this.colors.currentColor = colors.currentColor;
 		}
 	}
+
+	setIterationDelay(iterationDelay) {
+		this.iterationDelay = iterationDelay;
+	}
+	
+	getIterationDelay() {
+		return this.iterationDelay;
+	}
 }
 
 
@@ -60,7 +67,7 @@ async function sort() {
 				const temp = array[j - 1];
 				array[j - 1] = array[j];
 				array[j] = temp;
-				await scr.display(array, 300, j);
+				await scr.display(array, j);
 			}
 		}
 	}
